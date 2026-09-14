@@ -28,23 +28,8 @@ contract RouterL1 {
     function executeMessage(Types.Withdrawal memory withdrawal) external {
         require(!finalized[withdrawal.id], "withdrawal already finalized");
 
-        /*
-         * IMPORTANT:
-         *
-         * We mark the withdrawal finalized BEFORE
-         * calling the messenger.
-         */
         finalized[withdrawal.id] = true;
 
-        /*
-         * This models:
-         *
-         * OptimismPortal
-         *      |
-         *      +--> L1CrossDomainMessenger.relayMessage(...)
-         *
-         * We intentionally ignore the return value.
-         */
         bool success = SimpleSafeCall.call(
             l1Relayer,
             abi.encodeWithSelector(
@@ -55,12 +40,6 @@ contract RouterL1 {
             )
         );
 
-        /*
-         * Vulnerability:
-         *
-         * Even if success == false, the withdrawal remains
-         * finalized.
-         */
         emit Executed(withdrawal.id, success);
     }
 }
