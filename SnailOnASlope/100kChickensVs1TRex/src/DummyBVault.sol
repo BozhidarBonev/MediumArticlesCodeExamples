@@ -132,25 +132,25 @@ contract DummyBVault is ERC20, Ownable {
             uint256 grossOut
         )
     {
-        uint256 capPrice = oracle.price(address(this));
-        uint256 capUnit = 10 ** decimals();
+        uint256 bUsdPrice = oracle.price(address(this));
+        uint256 bUsdUnit = 10 ** decimals();
 
         uint256 assetValue = (amountIn * oracle.price(asset)) /
             (10 ** IERC20Metadata(asset).decimals());
         uint256 allocationValue = (totalSupplies[asset] * oracle.price(asset)) /
             (10 ** IERC20Metadata(asset).decimals());
-        uint256 capValue = (totalSupply() * capPrice) / capUnit;
+        uint256 bUsdValue = (totalSupply() * bUsdPrice) / bUsdUnit;
 
-        grossOut = (assetValue * capUnit) / capPrice;
+        grossOut = (assetValue * bUsdUnit) / bUsdPrice;
 
         if (totalSupply() != 0) {
-            oldRatio = (allocationValue * RAY) / capValue;
+            oldRatio = (allocationValue * RAY) / bUsdValue;
             midRatio =
                 ((allocationValue + assetValue / 2) * RAY) /
-                (capValue + assetValue / 2);
+                (bUsdValue + assetValue / 2);
             newRatio =
                 ((allocationValue + assetValue) * RAY) /
-                (capValue + assetValue);
+                (bUsdValue + assetValue);
         }
     }
 }
