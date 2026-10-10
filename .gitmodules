@@ -1,0 +1,6 @@
+[submodule "SnailOnASlope/100kChickensVs1TRex/lib/forge-std"]
+	path = SnailOnASlope/100kChickensVs1TRex/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
+[submodule "SnailOnASlope/100kChickensVs1TRex/lib/openzeppelin-contracts"]
+	path = SnailOnASlope/100kChickensVs1TRex/lib/openzeppelin-contracts
+	url = https://github.com/OpenZeppelin/openzeppelin-contracts
